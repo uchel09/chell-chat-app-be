@@ -171,8 +171,7 @@ class ConversationController {
   }
   static async updateIsRead(req, res, next) {
     const { messageId } = req.body;
-    console.log(messageId)
-    console.log(res.locals.user)
+
     try {
         await Message.updateOne(
           { _id:messageId , recipient: res.locals.user },

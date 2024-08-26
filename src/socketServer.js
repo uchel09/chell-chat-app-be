@@ -82,7 +82,7 @@ const SocketServer = (socket) => {
     //===========Send Message
     socket.on("send-message", (message) => {
       const user = users.find((user) => user.id === message?.message?.recipient);
-console.log(message)
+
       user &&
         socket.to(`${user.socketId}`).emit("send-message-toclient", message);
   });

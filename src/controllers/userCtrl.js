@@ -21,7 +21,7 @@ class UserController {
     }
   }
   static async updateUserById(req, res, next) {}
-  static async updateUserImageById(req, res, next) {}
+
 }
 
 export default UserController;

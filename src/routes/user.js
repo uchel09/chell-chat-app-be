@@ -5,6 +5,6 @@ const userRouter = express.Router();
 
 userRouter.get("/:username", userAuth, UserCtrl.getUserByUsername);
 userRouter.patch("/:id", UserCtrl.updateUserById);
-userRouter.put("/:id", UserCtrl.updateUserImageById);
+
 
 export default userRouter;

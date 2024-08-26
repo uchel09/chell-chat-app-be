@@ -78,7 +78,6 @@ class FriendRequestController {
         const conversation = await Conversation.create({
           recipients: [sender._id, receiver._id],
         });
-        console.log(conversation);
 
         return res.status(200).json({
           success: true,
@@ -285,7 +284,7 @@ class FriendRequestController {
       const conversation = await Conversation.create({
         recipients: [sender._id, receiver._id],
       });
-      console.log(conversation);
+
 
       res.status(200).json({
         message: "Friend request accepted and deleted",
