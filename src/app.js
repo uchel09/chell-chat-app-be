@@ -14,11 +14,12 @@ import SocketServer from "./socketServer.js";
 dotenv.config();
 dbConnection();
 const app = express();
+const allowedOrigins = [`${process.env.ORIGINS}`];
 
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: ["http://localhost:3000"],
+    origin: allowedOrigins,
     methods: ["GET", "POST", "DELETE", "PUT", "PATCH"],
     credentials: true,
   },
@@ -32,8 +33,8 @@ app.use(express.urlencoded({ extended: true, limit: "50mb" }));
 app.use(express.json());
 app.use(cookieParser());
 
-const allowedOrigins = [`${process.env.ORIGINS}`];
 const PORT = process.env.PORT || 8000;
+
 
 app.use(
   cors({
