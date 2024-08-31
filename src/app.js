@@ -32,7 +32,7 @@ app.use(express.urlencoded({ extended: true, limit: "50mb" }));
 app.use(express.json());
 app.use(cookieParser());
 
-const allowedOrigins = ["http://localhost:3000"];
+const allowedOrigins = [`${process.env.ORIGINS}`];
 const PORT = process.env.PORT || 8000;
 
 app.use(
