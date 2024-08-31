@@ -1,0 +1,1 @@
+export const orignUrl = process.env.ORIGINS

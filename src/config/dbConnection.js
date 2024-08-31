@@ -14,7 +14,7 @@ const dbConnection = async () => {
   }
 };
 
-// const dbConnection = async () => {
+// cosnst dbConnection = async () => {
 //   try {
 //     await mongoose.connect(
 //       process.env.MONGODB

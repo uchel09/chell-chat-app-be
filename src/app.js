@@ -14,12 +14,11 @@ import SocketServer from "./socketServer.js";
 dotenv.config();
 dbConnection();
 const app = express();
-const allowedOrigins = [`${process.env.ORIGINS}`];
 
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: allowedOrigins,
+    origin: ["https://chell-chat-app.vercel.app"],
     methods: ["GET", "POST", "DELETE", "PUT", "PATCH"],
     credentials: true,
   },
@@ -33,8 +32,8 @@ app.use(express.urlencoded({ extended: true, limit: "50mb" }));
 app.use(express.json());
 app.use(cookieParser());
 
+const allowedOrigins = ["https://chell-chat-app.vercel.app"];
 const PORT = process.env.PORT || 8000;
-
 
 app.use(
   cors({
