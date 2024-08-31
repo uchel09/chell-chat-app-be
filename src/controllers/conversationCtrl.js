@@ -71,8 +71,8 @@ class ConversationController {
 
   static async createMessage(req, res, next) {
     const { conversationId, text, media, call, recipient } = req.body;
-    const token = req.query.token
-    const senderId = res.locals.user; 
+    const token = req.query.token;
+    const senderId = res.locals.user;
 
     try {
       // Validasi data
@@ -113,12 +113,11 @@ class ConversationController {
         { new: true, upsert: true }
       ).populate("recipients", "username avatar _id");
 
-
       res.status(201).json({
         success: true,
         message: savedMessage,
         conversation: newConversation,
-        token
+        token,
       });
     } catch (error) {
       next(error);
@@ -173,13 +172,27 @@ class ConversationController {
     const { messageId } = req.body;
 
     try {
-        await Message.updateOne(
-          { _id:messageId , recipient: res.locals.user },
-          { isRead: true },
-          { new: true }
-        );
+      await Message.updateOne(
+        { _id: messageId, recipient: res.locals.user },
+        { isRead: true },
+        { new: true }
+      );
 
       res.status(200).json({ message: "update success" });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async deleteMessageById(req, res, next) {
+    const { id } = req.params;
+    try {
+
+      await Message.findByIdAndDelete(id);
+      res.status(200).json({
+        success: true,
+        message: "message deleted",
+      });
     } catch (error) {
       next(error);
     }

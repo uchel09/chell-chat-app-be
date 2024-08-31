@@ -7,7 +7,6 @@ const SocketServer = (socket) => {
   socket.on("join-user", (user) => {
     if (!user || !user._id) return;
 
-    // Temukan indeks pengguna yang sudah ada
     const userIndex = users.findIndex((u) => u.id === user._id);
 
     if (userIndex !== -1) {
@@ -74,17 +73,26 @@ const SocketServer = (socket) => {
     const user = users.find((user) => user.id === updatedUser._id);
     user &&
       socket.to(`${user.socketId}`).emit("delete-friend-toclient", updatedUser);
-    });
-    
-    //==========================================Route conversation message====================================================================
-    //===========add conversation
-    
-    //===========Send Message
-    socket.on("send-message", (message) => {
-      const user = users.find((user) => user.id === message?.message?.recipient);
+  });
 
-      user &&
-        socket.to(`${user.socketId}`).emit("send-message-toclient", message);
+  //==========================================Route conversation message====================================================================
+  //===========add conversation
+
+  //===========Send Message
+  socket.on("send-message", (message) => {
+    const user = users.find((user) => user.id === message?.message?.recipient);
+
+    user &&
+      socket.to(`${user.socketId}`).emit("send-message-toclient", message);
+  });
+  //===========delete Message
+  socket.on("delete-message", ({ messageId, recipient }) => {
+    const user = users.find((user) => user.id === recipient);
+
+    user &&
+      socket
+        .to(`${user.socketId}`)
+        .emit("delete-message-toclient", { messageId });
   });
 };
 

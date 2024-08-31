@@ -20,8 +20,40 @@ class UserController {
       next(error);
     }
   }
-  static async updateUserById(req, res, next) {}
-
+  static async updateUserById(req, res, next) {
+    const id = res.locals.user;
+    let { link, bio, avatar } = req.body;
+    try {
+      if (avatar?.imageUrl) {
+        await User.findByIdAndUpdate(
+          id,
+          {
+            link,
+            bio,
+            avatar,
+          },
+          { new: true }
+        );
+      } else {
+        await User.findByIdAndUpdate(
+          id,
+          {
+            link,
+            bio,
+          },
+          {
+            new: true,
+          }
+        );
+      }
+      res.status(200).json({
+        success: true,
+        message: "profile image updated",
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 export default UserController;
